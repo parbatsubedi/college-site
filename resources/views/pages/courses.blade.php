@@ -81,7 +81,7 @@ $defaultColor = '#077E86 0%, #172566 100%';
                     <p class="course-description">{{ $course->description }}</p>
                     <div class="course-meta">
                         <span class="course-duration">📅 {{ $course->duration }} Weeks</span>
-                        <a href="{{ route('courses.show', $course->id) }}" class="btn btn-primary btn-small">View Details</a>
+                        <a href="{{ route('courses.show', $course->slug) }}" class="btn btn-primary btn-small">View Details</a>
                     </div>
                 </div>
             </div>

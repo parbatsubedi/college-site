@@ -230,7 +230,7 @@
                         <p class="cta-subtitle">Start your application for {{ $selectedCourse->name }} today.</p>
                         <div class="hero-buttons">
                             <a href="{{ route('contact') }}?course={{ $selectedCourse->id }}" class="btn btn-primary">Apply Now</a>
-                            <a href="{{ route('courses.show', $selectedCourse->id) }}" class="btn btn-outline">View Course Details</a>
+                            <a href="{{ route('courses.show', $selectedCourse->slug) }}" class="btn btn-outline">View Course Details</a>
                         </div>
                     </div>
                 </div>

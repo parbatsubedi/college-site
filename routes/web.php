@@ -9,17 +9,21 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home-oldd', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'indexNew'])->name('home.new');
 Route::get('/courses', [HomeController::class, 'courses'])->name('courses');
-Route::get('/courses/{id}', [HomeController::class, 'courseShow'])->name('courses.show');
+Route::get('/courses/{slug}', [HomeController::class, 'courseShow'])->name('courses.show');
 Route::get('/admissions', [HomeController::class, 'admissions'])->name('admissions');
 Route::get('/events', [HomeController::class, 'events'])->name('events');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
     Route::get('/profile/edit', [AdminController::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile/update', [AdminController::class, 'updateProfile'])->name('profile.update');
 

@@ -260,7 +260,7 @@
                     <h3 class="course-title">{{ $related->name }}</h3>
                     <div class="course-meta">
                         <span class="course-duration">📅 {{ $related->duration }} Weeks</span>
-                        <a href="{{ route('courses.show', $related->id) }}" class="btn btn-primary btn-small">View Details</a>
+                        <a href="{{ route('courses.show', $related->slug) }}" class="btn btn-primary btn-small">View Details</a>
                     </div>
                 </div>
             </div>

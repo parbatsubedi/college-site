@@ -13,6 +13,11 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function indexNew()
+    {
+        return view('pages.home-new');
+    }
+
     public function courses(Request $request)
     {
         $category = $request->query('category');
@@ -28,9 +33,9 @@ class HomeController extends Controller
         return view('pages.courses', compact('courses'));
     }
 
-    public function courseShow($id)
+    public function courseShow($slug)
     {
-        $course = Course::findOrFail($id);
+        $course = Course::where('slug', $slug)->firstOrFail();
 
         return view('pages.courses-show', compact('course'));
     }

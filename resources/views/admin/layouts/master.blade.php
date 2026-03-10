@@ -243,6 +243,9 @@
             <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <i class="fas fa-home"></i> Dashboard
             </a>
+            <a href="{{ route('admin.settings.index') }}" class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+                <i class="fas fa-cog"></i> General Settings
+            </a>
             <a href="{{ route('admin.pages.index') }}" class="{{ request()->routeIs('admin.pages.*') ? 'active' : '' }}">
                 <i class="fas fa-file"></i> Pages
             </a>

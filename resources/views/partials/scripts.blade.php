@@ -95,19 +95,54 @@
         });
     }
 
-    // Theme Toggle
+    // Theme Toggle - System default with light/dark toggle
     const themeToggle = document.getElementById('themeToggle');
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-
+    const sunIcon = document.getElementById('sunIcon');
+    const moonIcon = document.getElementById('moonIcon');
+    
+    function getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        updateThemeIcons(theme);
+    }
+    
+    function updateThemeIcons(theme) {
+        if (sunIcon && moonIcon) {
+            if (theme === 'dark') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'inline';
+            } else {
+                sunIcon.style.display = 'inline';
+                moonIcon.style.display = 'none';
+            }
+        }
+    }
+    
+    // Initialize theme - check localStorage first, then system
+    let initialTheme = localStorage.getItem('theme');
+    if (!initialTheme) {
+        initialTheme = getSystemTheme();
+    }
+    setTheme(initialTheme);
+    
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
+            setTheme(newTheme);
         });
     }
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            setTheme(e.matches ? 'dark' : 'light');
+        }
+    });
 
     // Hero Slider
     const heroSlides = document.querySelectorAll('.hero-slide');
