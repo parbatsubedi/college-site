@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             SettingsSeeder::class,
             CourseSeeder::class,
             EventSeeder::class,
+            BannerSeeder::class,
         ]);
 
     }
