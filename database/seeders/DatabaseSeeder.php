@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolesAndPermissionsSeeder::class,
             SettingsSeeder::class,
-            CourseSeeder::class,
-            EventSeeder::class,
+            // CourseSeeder::class,
+            // EventSeeder::class,
             BannerSeeder::class,
         ]);
 
