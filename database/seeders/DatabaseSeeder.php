@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // Run our content seeders first
         $this->call([
-            RolesAndPermissionsSeeder::class,
+            // RolesAndPermissionsSeeder::class,
             SettingsSeeder::class,
             // CourseSeeder::class,
             // EventSeeder::class,
