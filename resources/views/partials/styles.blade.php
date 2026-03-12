@@ -394,15 +394,21 @@
     }
 
     .hero-slide-1 .hero-slide-bg {
-        background: linear-gradient(135deg, #077E86 0%, #2A7970 50%, #077E86 100%);
+        background-image: linear-gradient(135deg, rgba(7,126,134,0.75) 0%, rgba(42,121,112,0.75) 100%), url('https://images.unsplash.com/photo-1526378729276-3d5d077d2e8f?auto=format&fit=crop&w=1600&q=80');
+        background-size: cover;
+        background-position: center;
     }
 
     .hero-slide-2 .hero-slide-bg {
-        background: linear-gradient(135deg, #172566 0%, #1e3170 50%, #172566 100%);
+        background-image: linear-gradient(135deg, rgba(23,36,102,0.75) 0%, rgba(30,49,112,0.75) 100%), url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1600&q=80');
+        background-size: cover;
+        background-position: center;
     }
 
     .hero-slide-3 .hero-slide-bg {
-        background: linear-gradient(135deg, #077E86 0%, #172566 50%, #2A7970 100%);
+        background-image: linear-gradient(135deg, rgba(7,126,134,0.75) 0%, rgba(23,37,102,0.75) 100%), url('https://images.unsplash.com/photo-1496307042754-b4d916d0b8f2?auto=format&fit=crop&w=1600&q=80');
+        background-size: cover;
+        background-position: center;
     }
 
     .hero-overlay {

@@ -10,29 +10,46 @@
 
 <div class="card">
     <div class="card-body">
-        <div class="row">
-            @forelse($galleries as $gallery)
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <img src="{{ $gallery->image }}" class="card-img-top" alt="{{ $gallery->title }}" style="height: 150px; object-fit: cover;">
-                    <div class="card-body">
-                        <h6 class="card-title">{{ $gallery->title }}</h6>
-                        <p class="card-text small text-muted">{{ $gallery->category }}</p>
-                        <span class="badge bg-{{ $gallery->is_published ? 'success' : 'secondary' }}">{{ $gallery->is_published ? 'Published' : 'Draft' }}</span>
-                    </div>
-                    <div class="card-footer bg-transparent">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($galleries as $gallery)
+                <tr>
+                    <td>
+                        <img src="{{ $gallery->image }}" alt="{{ $gallery->title }}" 
+                             data-full-src="{{ $gallery->image }}" 
+                             style="width: 60px; height: 40px; object-fit: cover; cursor: pointer; border-radius: 4px;"/>
+                    </td>
+                    <td>{{ $gallery->title }}</td>
+                    <td>{{ $gallery->category }}</td>
+                    <td>
+                        @if($gallery->is_published)
+                            <span class="badge bg-success">Published</span>
+                        @else
+                            <span class="badge bg-secondary">Draft</span>
+                        @endif
+                    </td>
+                    <td class="table-actions">
                         <a href="{{ route('admin.galleries.edit', $gallery) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                         <form action="{{ route('admin.galleries.destroy', $gallery) }}" method="POST" class="d-inline">
                             @csrf @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete?')"><i class="fas fa-trash"></i></button>
                         </form>
-                    </div>
-                </div>
-            </div>
-            @empty
-            <div class="col-12 text-center text-muted">No gallery images</div>
-            @endforelse
-        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr><td colspan="5" class="text-center text-muted">No gallery images</td></tr>
+                @endforelse
+            </tbody>
+        </table>
         {{ $galleries->links() }}
     </div>
 </div>

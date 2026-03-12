@@ -42,7 +42,7 @@
                 <div class="fade-in" style="margin-top: 40px;">
                     <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 20px; color: var(--text-dark);">Course Structure</h3>
                     <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
-                        @if($course->core_units && count($course->core_units) > 0)
+                        @if($course->core_units && is_array($course->core_units) && count($course->core_units) > 0)
                         <div style="padding: 20px; border-bottom: 1px solid var(--border-color);">
                             <h4 style="font-size: 16px; font-weight: 600; color: var(--primary); margin-bottom: 10px;">Core Units</h4>
                             <ul style="list-style: none; padding: 0;">
@@ -52,7 +52,7 @@
                             </ul>
                         </div>
                         @endif
-                        @if($course->elective_units && count($course->elective_units) > 0)
+                        @if($course->elective_units && is_array($course->elective_units) && count($course->elective_units) > 0)
                         <div style="padding: 20px;">
                             <h4 style="font-size: 16px; font-weight: 600; color: var(--primary); margin-bottom: 10px;">Elective Units</h4>
                             <ul style="list-style: none; padding: 0;">
@@ -66,7 +66,7 @@
                 </div>
                 @endif
 
-                @if($course->career_outcomes && count($course->career_outcomes) > 0)
+                @if($course->career_outcomes && is_array($course->career_outcomes) && count($course->career_outcomes) > 0)
                 <div class="fade-in" style="margin-top: 40px;">
                     <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 20px; color: var(--text-dark);">Career Outcomes</h3>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Course;
 use App\Models\Event;
 use Illuminate\Http\Request;
@@ -15,7 +16,10 @@ class HomeController extends Controller
 
     public function indexNew()
     {
-        return view('pages.home-new');
+        // Load active banners for dynamic homepage hero
+        $banners = Banner::active()->get();
+
+        return view('pages.home-new', compact('banners'));
     }
 
     public function courses(Request $request)

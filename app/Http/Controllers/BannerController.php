@@ -15,11 +15,13 @@ class BannerController extends Controller
         // For API
         if (request()->expectsJson()) {
             $banners = Banner::active()->get();
+
             return response()->json($banners);
         }
-        
+
         // For admin view
         $banners = Banner::orderBy('order', 'asc')->get();
+
         return view('admin.banners.index', compact('banners'));
     }
 
@@ -46,11 +48,18 @@ class BannerController extends Controller
             'button_link' => 'nullable|string|max:255',
             'order' => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
+            'image_file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        // Handle uploaded image file (store to public/storage/banners)
+        if ($request->hasFile('image_file')) {
+            $path = $request->file('image_file')->store('banners', 'public');
+            $validated['image_path'] = $path;
+        }
 
         Banner::create($validated);
 
-        return redirect()->route('admin.dashboard')->with('success', 'Banner created successfully!');
+        return redirect()->back()->with('success', 'Banner created successfully!');
     }
 
     /**
@@ -84,7 +93,14 @@ class BannerController extends Controller
             'button_link' => 'nullable|string|max:255',
             'order' => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
+            'image_file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        // Handle uploaded image file (store to public/storage/banners)
+        if ($request->hasFile('image_file')) {
+            $path = $request->file('image_file')->store('banners', 'public');
+            $validated['image_path'] = $path;
+        }
 
         $banner->update($validated);
 
@@ -101,4 +117,3 @@ class BannerController extends Controller
         return redirect()->route('admin.dashboard')->with('success', 'Banner deleted successfully!');
     }
 }
-

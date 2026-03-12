@@ -3,24 +3,24 @@
 @section('title', 'Home - Fusion College of Technology')
 
 @section('content')
-<!-- Hero Section -->
+<!-- Hero Section (dynamic banners from Admin) -->
 <section class="hero">
     <div class="hero-slider">
-        <div class="hero-slide hero-slide-1 active">
-            <div class="hero-slide-bg"></div>
+        @forelse ($banners ?? [] as $banner)
+        <div class="hero-slide" data-slide="{{ $loop->index }}" data-title="{{ $banner->title }}" data-subtitle="{{ $banner->subtitle }}">
+            <div class="hero-slide-bg" style="background-image: linear-gradient(135deg, rgba(7,126,134,.75) 0%, rgba(42,121,112,.75) 100%), url('{{ $banner->getBackgroundImage() }}');"></div>
         </div>
-        <div class="hero-slide hero-slide-2">
-            <div class="hero-slide-bg"></div>
+        @empty
+        <div class="hero-slide active" data-slide="0" data-title="Welcome to {{ $settings->college_name }}" data-subtitle="Empowering Future Professionals Through Quality Education">
+            <div class="hero-slide-bg" style="background-image: linear-gradient(135deg, rgba(7,126,134,.75) 0%, rgba(42,121,112,.75) 100%), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');"></div>
         </div>
-        <div class="hero-slide hero-slide-3">
-            <div class="hero-slide-bg"></div>
-        </div>
+        @endforelse
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <span class="hero-badge">Welcome to {{ $settings->college_name }}</span>
         <h1 class="hero-title" id="heroTitle">Empowering Future Professionals Through Quality Education</h1>
-        <p class="hero-subtitle">Launch your career with nationally recognized qualifications and industry-experienced trainers.</p>
+        <p class="hero-subtitle" id="heroSubtitle">Launch your career with nationally recognized qualifications and industry-experienced trainers.</p>
         <div class="hero-buttons">
             <a href="{{ route('courses') }}" class="btn btn-primary">Explore Courses</a>
             <a href="{{ route('contact') }}" class="btn btn-outline">Enquire Now</a>
@@ -32,9 +32,12 @@
         </svg>
     </div>
     <div class="hero-indicators">
-        <span class="hero-indicator active" data-slide="0"></span>
-        <span class="hero-indicator" data-slide="1"></span>
-        <span class="hero-indicator" data-slide="2"></span>
+        @foreach ($banners ?? [] as $banner)
+        <span class="hero-indicator {{ $loop->first ? 'active' : '' }}" data-slide="{{ $loop->index }}"></span>
+        @endforeach
+        @if(($banners ?? collect())->isEmpty())
+            <span class="hero-indicator active" data-slide="0"></span>
+        @endif
     </div>
 </section>
 

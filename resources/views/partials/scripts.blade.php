@@ -144,6 +144,8 @@
         }
     });
 
+    // Hero Slider with dynamic per-slide text coming from data attributes
+
     // Hero Slider
     const heroSlides = document.querySelectorAll('.hero-slide');
     const heroIndicators = document.querySelectorAll('.hero-indicator');
@@ -158,8 +160,21 @@
             heroIndicators.forEach((indicator, i) => {
                 indicator.classList.toggle('active', i === index);
             });
+            // Update texts to match the slide data attributes
+            const firstSlide = heroSlides[index];
+            const heroTitleEl = document.getElementById('heroTitle');
+            const heroSubtitleEl = document.getElementById('heroSubtitle');
+            if (firstSlide) {
+                const title = firstSlide.dataset.title;
+                const subtitle = firstSlide.dataset.subtitle;
+                if (heroTitleEl && title) heroTitleEl.textContent = title;
+                if (heroSubtitleEl && subtitle) heroSubtitleEl.textContent = subtitle;
+            }
             currentSlide = index;
         }
+
+        // Initialize with first slide texts
+        showSlide(0);
 
         // Auto slide
         setInterval(() => {

@@ -261,6 +261,9 @@
             <a href="{{ route('admin.galleries.index') }}" class="{{ request()->routeIs('admin.galleries.*') ? 'active' : '' }}">
                 <i class="fas fa-images"></i> Gallery
             </a>
+            <a href="{{ route('admin.banners.index') }}" class="{{ request()->routeIs('admin.banners.*') ? 'active' : '' }}">
+                <i class="fas fa-images"></i> Banners
+            </a>
             <a href="{{ route('admin.applications.index') }}" class="{{ request()->routeIs('admin.applications.*') ? 'active' : '' }}">
                 <i class="fas fa-users"></i> Applications
                 @php $pending = \App\Models\Application::where('status', 'pending')->count(); @endphp
@@ -331,6 +334,18 @@
         </footer>
     </div>
 
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <button type="button" class="btn-close position-absolute top-0 end-0 m-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <img id="modalImage" src="" alt="Preview" class="img-fluid w-100" style="border-radius: 4px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -383,6 +398,20 @@
 
             document.addEventListener('click', function() {
                 profileMenu.classList.remove('show');
+            });
+
+            // Image modal functionality
+            document.addEventListener('click', function(e) {
+                const img = e.target;
+                if (img.tagName === 'IMG' && img.dataset.fullSrc) {
+                    const modal = document.getElementById('imageModal');
+                    const modalImg = document.getElementById('modalImage');
+                    if (modal && modalImg) {
+                        modalImg.src = img.dataset.fullSrc;
+                        const bsModal = new bootstrap.Modal(modal);
+                        bsModal.show();
+                    }
+                }
             });
         });
     </script>
