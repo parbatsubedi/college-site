@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -28,11 +29,20 @@ class EventController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
             'location' => 'nullable|string|max:255',
-            'image' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'is_published' => 'boolean',
         ]);
 
-        Event::create($request->all());
+        $data = $request->except('image');
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time().'_'.$image->getClientOriginalName();
+            $image->storeAs('events', $imageName, 'public');
+            $data['image'] = $imageName;
+        }
+
+        Event::create($data);
 
         return redirect()->route('admin.events.index')->with('success', 'Event created successfully');
     }
@@ -56,11 +66,23 @@ class EventController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
             'location' => 'nullable|string|max:255',
-            'image' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'is_published' => 'boolean',
         ]);
 
-        $event->update($request->all());
+        $data = $request->except('image');
+
+        if ($request->hasFile('image')) {
+            if ($event->image) {
+                Storage::disk('public')->delete('events/'.$event->image);
+            }
+            $image = $request->file('image');
+            $imageName = time().'_'.$image->getClientOriginalName();
+            $image->storeAs('events', $imageName, 'public');
+            $data['image'] = $imageName;
+        }
+
+        $event->update($data);
 
         return redirect()->route('admin.events.index')->with('success', 'Event updated successfully');
     }

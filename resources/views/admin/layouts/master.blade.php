@@ -6,6 +6,16 @@
     <title>@yield('title', 'Admin Panel') - College Site</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script>
+    <style>
+        .ck-editor__editable { min-height: 200px; }
+        .ck.ck-editor__main>.ck-editor__editable { background: var(--card-bg); }
+        .ck.ck-toolbar { background: var(--bg-secondary); border-color: var(--border-color); }
+        .ck.ck-editor__main>.ck-editor__editable { border-color: var(--border-color); }
+        .ck.ck-editor__main>.ck-editor__editable.ck-focused { border-color: var(--primary-color); }
+        .ck.ck-button { color: var(--text-color); }
+        .ck.ck-button.ck-on { background: var(--border-color); }
+    </style>
     <style>
         :root {
             --sidebar-width: 260px;
@@ -413,6 +423,49 @@
                     }
                 }
             });
+        });
+
+        // Global CKEditor initialization
+        function initCKEditor(selector) {
+            document.querySelectorAll(selector).forEach(el => {
+                if (el.dataset.ckeditorInitialized) return;
+                el.dataset.ckeditorInitialized = 'true';
+                ClassicEditor
+                    .create(el, {
+                        toolbar: [
+                            'heading', '|',
+                            'bold', 'italic', 'underline', 'strikethrough', '|',
+                            'bulletedList', 'numberedList', '|',
+                            'link', 'blockQuote', '|',
+                            'undo', 'redo'
+                        ],
+                        heading: {
+                            options: [
+                                { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                                { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                                { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                                { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' }
+                            ]
+                        }
+                    })
+                    .then(editor => {
+                        // Suppress image paste errors - images are not supported
+                        editor.editing.view.document.on('clipboardInput', (evt, data) => {
+                            if (data.dataTransfer.getFiles().length > 0) {
+                                evt.stop();
+                                return;
+                            }
+                        }, { priority: 'high' });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            });
+        }
+
+        // Auto-initialize all CKEditor instances on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initCKEditor('.ckeditor');
         });
     </script>
     @yield('scripts')

@@ -3,25 +3,28 @@
 @section('title', 'Home - Fusion College of Technology')
 
 @section('content')
-<!-- Hero Section (dynamic banners from Admin) -->
+<!-- Hero Section -->
 <section class="hero">
     <div class="hero-slider">
-        @forelse ($banners ?? [] as $banner)
-        <div class="hero-slide" data-slide="{{ $loop->index }}" data-title="{{ $banner->title }}" data-subtitle="{{ $banner->subtitle }}">
-            <div class="hero-slide-bg" style="background-image: linear-gradient(135deg, rgba(7,126,134,.75) 0%, rgba(42,121,112,.75) 100%), url('{{ $banner->getBackgroundImage() }}');"></div>
+        <div class="hero-slide hero-slide-1 active">
+            <div class="hero-slide-bg" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c476?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center;"></div>
+            <div class="hero-slide-overlay"></div>
         </div>
-        @empty
-        <div class="hero-slide active" data-slide="0" data-title="Welcome to {{ $settings->college_name }}" data-subtitle="Empowering Future Professionals Through Quality Education">
-            <div class="hero-slide-bg" style="background-image: linear-gradient(135deg, rgba(7,126,134,.75) 0%, rgba(42,121,112,.75) 100%), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');"></div>
+        <div class="hero-slide hero-slide-2">
+            <div class="hero-slide-bg" style="background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center;"></div>
+            <div class="hero-slide-overlay"></div>
         </div>
-        @endforelse
+        <div class="hero-slide hero-slide-3">
+            <div class="hero-slide-bg" style="background-image: url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center;"></div>
+            <div class="hero-slide-overlay"></div>
+        </div>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-        <span class="hero-badge">Welcome to {{ $settings->college_name }}</span>
+        <span class="hero-badge" id="heroBadge">Welcome to {{ $settings->college_name }}</span>
         <h1 class="hero-title" id="heroTitle">Empowering Future Professionals Through Quality Education</h1>
         <p class="hero-subtitle" id="heroSubtitle">Launch your career with nationally recognized qualifications and industry-experienced trainers.</p>
-        <div class="hero-buttons">
+        <div class="hero-buttons" id="heroButtons">
             <a href="{{ route('courses') }}" class="btn btn-primary">Explore Courses</a>
             <a href="{{ route('contact') }}" class="btn btn-outline">Enquire Now</a>
         </div>
@@ -32,12 +35,9 @@
         </svg>
     </div>
     <div class="hero-indicators">
-        @foreach ($banners ?? [] as $banner)
-        <span class="hero-indicator {{ $loop->first ? 'active' : '' }}" data-slide="{{ $loop->index }}"></span>
-        @endforeach
-        @if(($banners ?? collect())->isEmpty())
-            <span class="hero-indicator active" data-slide="0"></span>
-        @endif
+        <span class="hero-indicator active" data-slide="0"></span>
+        <span class="hero-indicator" data-slide="1"></span>
+        <span class="hero-indicator" data-slide="2"></span>
     </div>
 </section>
 
@@ -135,7 +135,7 @@
             <div class="course-card fade-in">
                 <div class="course-image">
                     @if($course->image)
-                    <div class="course-image-bg" style="background-image: url('{{ asset('images/courses/' . $course->image) }}'); background-size: cover; background-position: center;"></div>
+                    <div class="course-image-bg" style="background-image: url('{{ asset('storage/courses/' . $course->image) }}'); background-size: cover; background-position: center;"></div>
                     @else
                     <div class="course-image-bg" style="background: linear-gradient(135deg, #077E86 0%, #2A7970 100%); display: flex; align-items: center; justify-content: center;">
                         <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
@@ -147,7 +147,7 @@
                 </div>
                 <div class="course-content">
                     <h3 class="course-title">{{ $course->name }}</h3>
-                    <p class="course-description">{{ Str::limit($course->description, 100) }}</p>
+                    <p class="course-description">{{ Str::limit(strip_tags($course->description), 100) }}</p>
                     <div class="course-meta">
                         <span class="course-duration">📅 {{ $course->duration }} Weeks</span>
                         <a href="{{ route('courses.show', $course->slug) }}" class="btn btn-primary btn-small">View Details</a>

@@ -55,7 +55,7 @@ $defaultColor = '#077E86 0%, #172566 100%';
             <div class="course-card fade-in">
                 <div class="course-image">
                     @if($course->image)
-                    <div class="course-image-bg" style="background-image: url('{{ asset('images/courses/' . $course->image) }}'); background-size: cover; background-position: center;">
+                    <div class="course-image-bg" style="background-image: url('{{ asset('storage/courses/' . $course->image) }}'); background-size: cover; background-position: center;">
                     </div>
                     @else
                     <div class="course-image-bg" style="background: linear-gradient(135deg, {{ isset($categoryColors[$course->category]) ? $categoryColors[$course->category] : $defaultColor }}); display: flex; align-items: center; justify-content: center;">
@@ -78,7 +78,7 @@ $defaultColor = '#077E86 0%, #172566 100%';
                 </div>
                 <div class="course-content">
                     <h3 class="course-title">{{ $course->name }}</h3>
-                    <p class="course-description">{{ $course->description }}</p>
+                    <p class="course-description">{{ Str::limit(strip_tags($course->description), 100) }}</p>
                     <div class="course-meta">
                         <span class="course-duration">📅 {{ $course->duration }} Weeks</span>
                         <a href="{{ route('courses.show', $course->slug) }}" class="btn btn-primary btn-small">View Details</a>

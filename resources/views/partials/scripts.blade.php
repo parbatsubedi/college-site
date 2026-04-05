@@ -144,14 +144,73 @@
         }
     });
 
-    // Hero Slider with dynamic per-slide text coming from data attributes
-
-    // Hero Slider
+    // Hero Slider with text animations
     const heroSlides = document.querySelectorAll('.hero-slide');
     const heroIndicators = document.querySelectorAll('.hero-indicator');
+    const heroTitleEl = document.getElementById('heroTitle');
+    const heroSubtitleEl = document.getElementById('heroSubtitle');
+    const heroBadgeEl = document.getElementById('heroBadge');
+    const heroButtonsEl = document.getElementById('heroButtons');
     
+    const slideTexts = [
+        {
+            badge: 'Welcome to {{ $settings->college_name }}',
+            title: 'Empowering Future Professionals Through Quality Education',
+            subtitle: 'Launch your career with nationally recognized qualifications and industry-experienced trainers.'
+        },
+        {
+            badge: 'World-Class Programs',
+            title: 'Discover Your Passion, Build Your Future',
+            subtitle: 'Choose from a wide range of courses designed to prepare you for the modern workforce.'
+        },
+        {
+            badge: 'Join Our Community',
+            title: 'Learn, Grow, and Succeed Together',
+            subtitle: 'Be part of a diverse community of learners from over 50 countries around the world.'
+        }
+    ];
+
     if (heroSlides.length > 0) {
         let currentSlide = 0;
+
+        function animateTextIn() {
+            if (heroBadgeEl) {
+                heroBadgeEl.style.opacity = '0';
+                heroBadgeEl.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    heroBadgeEl.style.transition = 'all 0.6s ease';
+                    heroBadgeEl.style.opacity = '1';
+                    heroBadgeEl.style.transform = 'translateY(0)';
+                }, 200);
+            }
+            if (heroTitleEl) {
+                heroTitleEl.style.opacity = '0';
+                heroTitleEl.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    heroTitleEl.style.transition = 'all 0.8s ease';
+                    heroTitleEl.style.opacity = '1';
+                    heroTitleEl.style.transform = 'translateY(0)';
+                }, 400);
+            }
+            if (heroSubtitleEl) {
+                heroSubtitleEl.style.opacity = '0';
+                heroSubtitleEl.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    heroSubtitleEl.style.transition = 'all 0.8s ease';
+                    heroSubtitleEl.style.opacity = '1';
+                    heroSubtitleEl.style.transform = 'translateY(0)';
+                }, 600);
+            }
+            if (heroButtonsEl) {
+                heroButtonsEl.style.opacity = '0';
+                heroButtonsEl.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    heroButtonsEl.style.transition = 'all 0.8s ease';
+                    heroButtonsEl.style.opacity = '1';
+                    heroButtonsEl.style.transform = 'translateY(0)';
+                }, 800);
+            }
+        }
 
         function showSlide(index) {
             heroSlides.forEach((slide, i) => {
@@ -160,20 +219,18 @@
             heroIndicators.forEach((indicator, i) => {
                 indicator.classList.toggle('active', i === index);
             });
-            // Update texts to match the slide data attributes
-            const firstSlide = heroSlides[index];
-            const heroTitleEl = document.getElementById('heroTitle');
-            const heroSubtitleEl = document.getElementById('heroSubtitle');
-            if (firstSlide) {
-                const title = firstSlide.dataset.title;
-                const subtitle = firstSlide.dataset.subtitle;
-                if (heroTitleEl && title) heroTitleEl.textContent = title;
-                if (heroSubtitleEl && subtitle) heroSubtitleEl.textContent = subtitle;
+            
+            const textData = slideTexts[index];
+            if (textData) {
+                if (heroBadgeEl) heroBadgeEl.textContent = textData.badge;
+                if (heroTitleEl) heroTitleEl.textContent = textData.title;
+                if (heroSubtitleEl) heroSubtitleEl.textContent = textData.subtitle;
             }
+            
+            animateTextIn();
             currentSlide = index;
         }
 
-        // Initialize with first slide texts
         showSlide(0);
 
         // Auto slide

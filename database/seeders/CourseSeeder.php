@@ -4,89 +4,21 @@ namespace Database\Seeders;
 
 use App\Models\Course;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CourseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * FIELD GUIDE - Understanding each field:
-     * ======================================
-     *
-     * name           : Full course name (e.g., "Diploma of Information Technology")
-     *                : Shows as the main title on course cards and detail page
-     *
-     * slug           : URL-friendly version (e.g., "diploma-of-information-technology")
-     *                : Used in the URL: /courses/diploma-of-information-technology
-     *
-     * description   : Brief summary (2-3 sentences)
-     *                : Shows on course cards in the listing page
-     *
-     * category      : Course category for filtering
-     *                : Options: "it", "business", "health", "english", "leadership", "community"
-     *                : Used for category filter links
-     *
-     * duration      : Course duration in WEEKS (integer)
-     *                : Example: 52 = 52 weeks = 1 year
-     *                : Shows as "📅 52 Weeks" on course cards
-     *
-     * fee           : Tuition fee in dollars (decimal)
-     *                : Example: 12500.00 = $12,500
-     *                : Shows in the sidebar as tuition fee
-     *
-     * image         : Image filename (stored in public/images/courses/)
-     *                : If null, a gradient background with icon is shown
-     *                : Example: "it-course.jpg"
-     *
-     * study_mode    : How the course is delivered
-     *                : Example: "On Campus / Online" or "On Campus" or "Online"
-     *                : Shows in quick facts sidebar
-     *
-     * intake_months: Months when new classes start
-     *                : Example: "January, May, September" or "Monthly"
-     *                : Shows in quick facts sidebar
-     *
-     * location      : Campus locations
-     *                : Example: "Sydney, Melbourne" or "Online"
-     *                : Shows in quick facts sidebar
-     *
-     * cricos_code   : CRICOS registration code (for international students)
-     *                : Example: "03456J"
-     *                : Shows in quick facts sidebar
-     *
-     * curriculum    : General curriculum description (long text)
-     *                : Shows in Course Overview section
-     *
-     * core_units    : JSON array of core/mandatory units
-     *                : Example: ["Manage complex ICT projects", "Implement ICT security"]
-     *                : Shows in Course Structure section
-     *
-     * elective_units: JSON array of elective units
-     *                : Example: ["Cyber security governance", "Software development"]
-     *                : Shows in Course Structure section
-     *
-     * career_outcomes: JSON array of job titles
-     *                : Example: ["IT Support Specialist", "Network Administrator"]
-     *                : Shows in Career Outcomes section
-     *
-     * entry_requirements: Text describing what students need to apply
-     *                : Shows in Entry Requirements section
-     *                : Example: "Completion of Year 12, IELTS 5.5..."
-     *
-     * instructor    : Course coordinator/trainer name (optional)
-     *                : Example: "John Smith"
-     *
-     * is_published  : Whether to show on frontend (true/false)
-     *                : true = shows on website
-     *                : false = hidden from website
-     */
     public function run(): void
     {
+        
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('courses')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         $courses = [
             [
                 'name' => 'Diploma of Information Technology',
                 'slug' => 'diploma-of-information-technology',
-                'description' => 'Gain advanced skills in IT infrastructure, software development, and network security. This comprehensive program prepares you for a career in the rapidly growing IT industry.',
+                'description' => '<p>Gain advanced skills in IT infrastructure, software development, and network security. This comprehensive program prepares you for a career in the rapidly growing IT industry.</p>',
                 'category' => 'it',
                 'duration' => 52,
                 'fee' => 12500.00,
@@ -94,37 +26,22 @@ class CourseSeeder extends Seeder
                 'intake_months' => 'January, May, September',
                 'location' => 'Sydney, Melbourne',
                 'cricos_code' => '03456J',
-                'curriculum' => 'This qualification reflects the role of individuals who have a broad knowledge of information and communications technology (ICT) and use a wide range of specialized technical skills. Graduates will be able to configure and manage networks and computing environments, develop and implement ICT solutions, and provide advice and support to users.',
-                'core_units' => [
-                    'Manage complex ICT projects',
-                    'Implement and manage ICT security',
-                    'Develop and implement cloud computing systems',
-                    'Manage database systems',
-                    'Lead and manage team effectiveness',
-                    'ICT business development',
-                ],
-                'elective_units' => [
-                    'Cyber security governance',
-                    'Software development programming',
-                    'Network and virtualisation',
-                    'Web development',
-                    'Data analytics',
-                ],
-                'career_outcomes' => [
-                    'IT Support Specialist',
-                    'Network Administrator',
-                    'Systems Analyst',
-                    'ICT Security Specialist',
-                    'Technical Support Officer',
-                ],
-                'entry_requirements' => "• Completion of Year 12 or equivalent\n• IELTS 5.5 or equivalent (for international students)\n• Basic computer skills\n• Minimum 18 years of age",
+                'curriculum' => '<p>This qualification reflects the role of individuals who have a broad knowledge of information and communications technology (ICT) and use a wide range of specialized technical skills.</p>',
+                'core_units' => json_encode(['Manage complex ICT projects', 'Implement and manage ICT security', 'Develop and implement cloud computing systems', 'Manage database systems', 'Lead and manage team effectiveness', 'ICT business development']),
+                'elective_units' => json_encode(['Cyber security governance', 'Software development programming', 'Network and virtualisation', 'Web development', 'Data analytics']),
+                'career_outcomes' => json_encode(['IT Support Specialist', 'Network Administrator', 'Systems Analyst', 'ICT Security Specialist', 'Technical Support Officer']),
+                'entry_requirements' => '<ul><li>Completion of Year 12 or equivalent</li><li>IELTS 5.5 or equivalent (for international students)</li><li>Basic computer skills</li><li>Minimum 18 years of age</li></ul>',
+                'how_to_apply' => '<ol><li>Choose your desired course</li><li>Complete the online application form</li><li>Submit required documents (transcripts, ID, English test results)</li><li>Wait for assessment and offer letter</li><li>Accept offer and pay enrollment fee</li></ol>',
+                'international_requirements' => '<ul><li>Valid passport</li><li>IELTS 5.5 (no band below 5.0)</li><li>Overseas Student Health Cover (OSHC)</li><li>Proof of sufficient funds</li><li>Student visa (subclass 500)</li></ul>',
+                'fees_payment_info' => '<p><strong>Tuition Fee:</strong> $12,500 per year</p><p><strong>Payment Plan:</strong> Available in 4 installments</p><ul><li>First installment: $3,125 (enrollment)</li><li>Second installment: $3,125 (week 13)</li><li>Third installment: $3,125 (week 26)</li><li>Fourth installment: $3,125 (week 39)</li></ul>',
+                'policies_forms' => '<ul><li>Student Handbook</li><li>Refund Policy</li><li>Complaint & Appeal Form</li><li>Credit Transfer Application</li><li>Deferral Request Form</li></ul>',
                 'instructor' => 'Dr. Sarah Johnson',
                 'is_published' => true,
             ],
             [
                 'name' => 'Diploma of Business',
                 'slug' => 'diploma-of-business',
-                'description' => 'Develop essential business skills in management, marketing, and organizational leadership. Learn to navigate the modern business landscape with confidence.',
+                'description' => '<p>Develop essential business skills in management, marketing, and organizational leadership. Learn to navigate the modern business landscape with confidence.</p>',
                 'category' => 'business',
                 'duration' => 52,
                 'fee' => 11500.00,
@@ -132,37 +49,22 @@ class CourseSeeder extends Seeder
                 'intake_months' => 'January, May, September',
                 'location' => 'Sydney, Melbourne',
                 'cricos_code' => '03457K',
-                'curriculum' => 'The Diploma of Business provides students with the skills and knowledge to work in a variety of business roles. Students will learn about business operations, strategic management, marketing, and organizational leadership.',
-                'core_units' => [
-                    'Develop business plans',
-                    'Manage business operations',
-                    'Lead team effectiveness',
-                    'Marketing and communication',
-                    'Financial basics for business',
-                    'Project management',
-                ],
-                'elective_units' => [
-                    'Human resource management',
-                    'Digital marketing',
-                    'Business analytics',
-                    'Entrepreneurship',
-                    'Corporate governance',
-                ],
-                'career_outcomes' => [
-                    'Business Manager',
-                    'Marketing Coordinator',
-                    'Operations Manager',
-                    'Project Coordinator',
-                    'Executive Officer',
-                ],
-                'entry_requirements' => "• Completion of Year 12 or equivalent\n• IELTS 5.5 or equivalent (for international students)\n• Minimum 18 years of age",
+                'curriculum' => '<p>The Diploma of Business provides students with the skills and knowledge to work in a variety of business roles.</p>',
+                'core_units' => json_encode(['Develop business plans', 'Manage business operations', 'Lead team effectiveness', 'Marketing and communication', 'Financial basics for business', 'Project management']),
+                'elective_units' => json_encode(['Human resource management', 'Digital marketing', 'Business analytics', 'Entrepreneurship', 'Corporate governance']),
+                'career_outcomes' => json_encode(['Business Manager', 'Marketing Coordinator', 'Operations Manager', 'Project Coordinator', 'Executive Officer']),
+                'entry_requirements' => '<ul><li>Completion of Year 12 or equivalent</li><li>IELTS 5.5 or equivalent (for international students)</li><li>Minimum 18 years of age</li></ul>',
+                'how_to_apply' => '<ol><li>Select Diploma of Business as your course</li><li>Submit online application form</li><li>Provide academic transcripts and English proficiency</li><li>Receive offer letter within 2 weeks</li><li>Enroll and begin your studies</li></ol>',
+                'international_requirements' => '<ul><li>Valid passport</li><li>IELTS 5.5 or equivalent</li><li>Overseas Student Health Cover</li><li>Financial capacity evidence</li></ul>',
+                'fees_payment_info' => '<p><strong>Tuition Fee:</strong> $11,500 per year</p><p><strong>Payment Plan:</strong> Available in 4 installments</p><ul><li>First installment: $2,875 (enrollment)</li><li>Second installment: $2,875 (week 13)</li><li>Third installment: $2,875 (week 26)</li><li>Fourth installment: $2,875 (week 39)</li></ul>',
+                'policies_forms' => '<ul><li>Student Handbook</li><li>Refund Policy</li><li>Complaint & Appeal Form</li><li>Credit Transfer Application</li></ul>',
                 'instructor' => 'Michael Chen',
                 'is_published' => true,
             ],
             [
                 'name' => 'Advanced Diploma of Leadership',
                 'slug' => 'advanced-diploma-of-leadership',
-                'description' => 'Master strategic leadership and management skills for senior organizational roles. Become an effective leader who drives organizational success.',
+                'description' => '<p>Master strategic leadership and management skills for senior organizational roles. Become an effective leader who drives organizational success.</p>',
                 'category' => 'leadership',
                 'duration' => 78,
                 'fee' => 14500.00,
@@ -170,37 +72,22 @@ class CourseSeeder extends Seeder
                 'intake_months' => 'March, July, November',
                 'location' => 'Sydney, Melbourne',
                 'cricos_code' => '03458L',
-                'curriculum' => 'The Advanced Diploma of Leadership develops strategic leadership skills necessary for senior management positions. Students will learn to lead organizational change, manage complex projects, and develop high-performing teams.',
-                'core_units' => [
-                    'Strategic leadership',
-                    'Organizational development',
-                    'Change management',
-                    'Risk management',
-                    'Financial strategy',
-                    'Business innovation',
-                ],
-                'elective_units' => [
-                    'Corporate strategy',
-                    'Executive coaching',
-                    'Business transformation',
-                    'Stakeholder management',
-                    'National sustainability',
-                ],
-                'career_outcomes' => [
-                    'Senior Manager',
-                    'Director of Operations',
-                    'Chief Operating Officer',
-                    'Regional Manager',
-                    'Executive Consultant',
-                ],
-                'entry_requirements' => "• Completion of Diploma or above\n• IELTS 6.0 or equivalent (for international students)\n• Minimum 2 years work experience\n• Minimum 20 years of age",
+                'curriculum' => '<p>The Advanced Diploma of Leadership develops strategic leadership skills necessary for senior management positions.</p>',
+                'core_units' => json_encode(['Strategic leadership', 'Organizational development', 'Change management', 'Risk management', 'Financial strategy', 'Business innovation']),
+                'elective_units' => json_encode(['Corporate strategy', 'Executive coaching', 'Business transformation', 'Stakeholder management', 'National sustainability']),
+                'career_outcomes' => json_encode(['Senior Manager', 'Director of Operations', 'Chief Operating Officer', 'Regional Manager', 'Executive Consultant']),
+                'entry_requirements' => '<ul><li>Completion of Diploma or above</li><li>IELTS 6.0 or equivalent (for international students)</li><li>Minimum 2 years work experience</li><li>Minimum 20 years of age</li></ul>',
+                'how_to_apply' => '<ol><li>Choose Advanced Diploma of Leadership</li><li>Complete application with work experience details</li><li>Submit transcripts and references</li><li>Attend interview (if required)</li><li>Receive offer and enroll</li></ol>',
+                'international_requirements' => '<ul><li>Valid passport</li><li>IELTS 6.0 (no band below 5.5)</li><li>Overseas Student Health Cover</li><li>Proof of work experience</li></ul>',
+                'fees_payment_info' => '<p><strong>Tuition Fee:</strong> $14,500 per year</p><p><strong>Payment Plan:</strong> Available in 6 installments</p><ul><li>First installment: $2,417 (enrollment)</li><li>Remaining 5 installments: $2,417 each</li></ul>',
+                'policies_forms' => '<ul><li>Student Handbook</li><li>Refund Policy</li><li>Complaint & Appeal Form</li><li>RPL Application Form</li></ul>',
                 'instructor' => 'Dr. Emma Thompson',
                 'is_published' => true,
             ],
             [
                 'name' => 'Diploma of Cybersecurity',
                 'slug' => 'diploma-of-cybersecurity',
-                'description' => 'Learn to protect organizations from cyber threats and manage security infrastructure. Become a sought-after cybersecurity professional.',
+                'description' => '<p>Learn to protect organizations from cyber threats and manage security infrastructure. Become a sought-after cybersecurity professional.</p>',
                 'category' => 'it',
                 'duration' => 52,
                 'fee' => 13500.00,
@@ -208,37 +95,22 @@ class CourseSeeder extends Seeder
                 'intake_months' => 'January, May, September',
                 'location' => 'Sydney, Melbourne',
                 'cricos_code' => '03459M',
-                'curriculum' => 'This qualification equips students with the skills to identify and resolve cybersecurity threats. Students will learn about network security, incident response, vulnerability assessment, and security governance.',
-                'core_units' => [
-                    'Cybersecurity fundamentals',
-                    'Network security implementation',
-                    'Incident response and forensics',
-                    'Vulnerability assessment',
-                    'Security governance',
-                    'Ethical hacking basics',
-                ],
-                'elective_units' => [
-                    'Cloud security',
-                    'Malware analysis',
-                    'Penetration testing',
-                    'Security compliance',
-                    'Cryptography',
-                ],
-                'career_outcomes' => [
-                    'Cybersecurity Analyst',
-                    'Security Operations Center (SOC) Analyst',
-                    'Network Security Engineer',
-                    'Incident Responder',
-                    'Security Consultant',
-                ],
-                'entry_requirements' => "• Completion of Year 12 or equivalent\n• IELTS 5.5 or equivalent (for international students)\n• Basic IT knowledge recommended\n• Minimum 18 years of age",
+                'curriculum' => '<p>This qualification equips students with the skills to identify and resolve cybersecurity threats.</p>',
+                'core_units' => json_encode(['Cybersecurity fundamentals', 'Network security implementation', 'Incident response and forensics', 'Vulnerability assessment', 'Security governance', 'Ethical hacking basics']),
+                'elective_units' => json_encode(['Cloud security', 'Malware analysis', 'Penetration testing', 'Security compliance', 'Cryptography']),
+                'career_outcomes' => json_encode(['Cybersecurity Analyst', 'Security Operations Center (SOC) Analyst', 'Network Security Engineer', 'Incident Responder', 'Security Consultant']),
+                'entry_requirements' => '<ul><li>Completion of Year 12 or equivalent</li><li>IELTS 5.5 or equivalent (for international students)</li><li>Basic IT knowledge recommended</li><li>Minimum 18 years of age</li></ul>',
+                'how_to_apply' => '<ol><li>Select Diploma of Cybersecurity</li><li>Complete online application</li><li>Submit academic records</li><li>Assessment and offer letter</li><li>Accept and enroll</li></ol>',
+                'international_requirements' => '<ul><li>Valid passport</li><li>IELTS 5.5 (no band below 5.0)</li><li>Overseas Student Health Cover</li><li>Proof of sufficient funds</li></ul>',
+                'fees_payment_info' => '<p><strong>Tuition Fee:</strong> $13,500 per year</p><p><strong>Payment Plan:</strong> Available in 4 installments</p><ul><li>First installment: $3,375 (enrollment)</li><li>Second installment: $3,375 (week 13)</li><li>Third installment: $3,375 (week 26)</li><li>Fourth installment: $3,375 (week 39)</li></ul>',
+                'policies_forms' => '<ul><li>Student Handbook</li><li>Refund Policy</li><li>Complaint & Appeal Form</li><li>Lab Safety Agreement</li></ul>',
                 'instructor' => 'James Wilson',
                 'is_published' => true,
             ],
             [
                 'name' => 'Diploma of Early Childhood Education',
                 'slug' => 'diploma-of-early-childhood-education',
-                'description' => 'Build a rewarding career in early childhood education and care. Learn to nurture and educate young children in a supportive environment.',
+                'description' => '<p>Build a rewarding career in early childhood education and care. Learn to nurture and educate young children in a supportive environment.</p>',
                 'category' => 'community',
                 'duration' => 78,
                 'fee' => 12000.00,
@@ -246,37 +118,22 @@ class CourseSeeder extends Seeder
                 'intake_months' => 'February, June, October',
                 'location' => 'Sydney, Melbourne, Brisbane',
                 'cricos_code' => '03460N',
-                'curriculum' => 'The Diploma of Early Childhood Education prepares students to work with children from birth to 6 years. Students will learn about child development, curriculum planning, health and safety, and educational practices.',
-                'core_units' => [
-                    'Child development and pedagogy',
-                    'Curriculum planning and implementation',
-                    'Health and safety in early childhood',
-                    'Family and community partnerships',
-                    'Early childhood teaching practices',
-                    'Leadership in early childhood',
-                ],
-                'elective_units' => [
-                    'Special needs education',
-                    'Indigenous perspectives',
-                    'Creative arts for children',
-                    'Science and math for young children',
-                    'Language and literacy development',
-                ],
-                'career_outcomes' => [
-                    'Early Childhood Educator',
-                    'Childcare Centre Manager',
-                    'Family Day Care Educator',
-                    'Kindergarten Teacher',
-                    'Early Childhood Coordinator',
-                ],
-                'entry_requirements' => "• Completion of Year 12 or equivalent\n• IELTS 6.0 or equivalent (for international students)\n• Working with Children Check\n• Minimum 18 years of age",
+                'curriculum' => '<p>The Diploma of Early Childhood Education prepares students to work with children from birth to 6 years.</p>',
+                'core_units' => json_encode(['Child development and pedagogy', 'Curriculum planning and implementation', 'Health and safety in early childhood', 'Family and community partnerships', 'Early childhood teaching practices', 'Leadership in early childhood']),
+                'elective_units' => json_encode(['Special needs education', 'Indigenous perspectives', 'Creative arts for children', 'Science and math for young children', 'Language and literacy development']),
+                'career_outcomes' => json_encode(['Early Childhood Educator', 'Childcare Centre Manager', 'Family Day Care Educator', 'Kindergarten Teacher', 'Early Childhood Coordinator']),
+                'entry_requirements' => '<ul><li>Completion of Year 12 or equivalent</li><li>IELTS 6.0 or equivalent (for international students)</li><li>Working with Children Check</li><li>Minimum 18 years of age</li></ul>',
+                'how_to_apply' => '<ol><li>Choose Diploma of Early Childhood Education</li><li>Complete application form</li><li>Provide Working with Children Check</li><li>Submit academic transcripts</li><li>Receive offer and enroll</li></ol>',
+                'international_requirements' => '<ul><li>Valid passport</li><li>IELTS 6.0 (no band below 5.5)</li><li>Overseas Student Health Cover</li><li>Police clearance certificate</li></ul>',
+                'fees_payment_info' => '<p><strong>Tuition Fee:</strong> $12,000 per year</p><p><strong>Payment Plan:</strong> Available in 6 installments</p><ul><li>First installment: $2,000 (enrollment)</li><li>Remaining 5 installments: $2,000 each</li></ul>',
+                'policies_forms' => '<ul><li>Student Handbook</li><li>Refund Policy</li><li>Complaint & Appeal Form</li><li>Practicum Placement Agreement</li></ul>',
                 'instructor' => 'Lisa Anderson',
                 'is_published' => true,
             ],
             [
                 'name' => 'Certificate IV in Programming',
                 'slug' => 'certificate-iv-in-programming',
-                'description' => 'Start your programming career with foundational skills in software development. Learn multiple programming languages and development methodologies.',
+                'description' => '<p>Start your programming career with foundational skills in software development. Learn multiple programming languages and development methodologies.</p>',
                 'category' => 'it',
                 'duration' => 26,
                 'fee' => 7500.00,
@@ -284,36 +141,25 @@ class CourseSeeder extends Seeder
                 'intake_months' => 'Monthly',
                 'location' => 'Sydney, Melbourne',
                 'cricos_code' => '03461P',
-                'curriculum' => 'This certificate provides foundational programming skills for those starting their IT journey. Students will learn Python, JavaScript, HTML/CSS, and database fundamentals.',
-                'core_units' => [
-                    'Programming fundamentals',
-                    'Web development basics',
-                    'Database design',
-                    'Software development lifecycle',
-                    'Problem solving for programming',
-                ],
-                'elective_units' => [
-                    'Mobile app development intro',
-                    'Game development basics',
-                    'Data visualization',
-                    'API development',
-                    'Version control',
-                ],
-                'career_outcomes' => [
-                    'Junior Software Developer',
-                    'Web Developer',
-                    'Programming Assistant',
-                    'Software Tester',
-                    'IT Support Technician',
-                ],
-                'entry_requirements' => "• Completion of Year 10 or equivalent\n• IELTS 5.0 or equivalent (for international students)\n• Minimum 16 years of age",
+                'curriculum' => '<p>This certificate provides foundational programming skills for those starting their IT journey.</p>',
+                'core_units' => json_encode(['Programming fundamentals', 'Web development basics', 'Database design', 'Software development lifecycle', 'Problem solving for programming']),
+                'elective_units' => json_encode(['Mobile app development intro', 'Game development basics', 'Data visualization', 'API development', 'Version control']),
+                'career_outcomes' => json_encode(['Junior Software Developer', 'Web Developer', 'Programming Assistant', 'Software Tester', 'IT Support Technician']),
+                'entry_requirements' => '<ul><li>Completion of Year 10 or equivalent</li><li>IELTS 5.0 or equivalent (for international students)</li><li>Minimum 16 years of age</li></ul>',
+                'how_to_apply' => '<ol><li>Select Certificate IV in Programming</li><li>Complete online application</li><li>Submit Year 10 results or equivalent</li><li>Receive offer letter</li><li>Enroll and start coding</li></ol>',
+                'international_requirements' => '<ul><li>Valid passport</li><li>IELTS 5.0 or equivalent</li><li>Overseas Student Health Cover</li><li>Parental consent (if under 18)</li></ul>',
+                'fees_payment_info' => '<p><strong>Tuition Fee:</strong> $7,500 per year</p><p><strong>Payment Plan:</strong> Available in 2 installments</p><ul><li>First installment: $3,750 (enrollment)</li><li>Second installment: $3,750 (week 13)</li></ul>',
+                'policies_forms' => '<ul><li>Student Handbook</li><li>Refund Policy</li><li>Complaint & Appeal Form</li></ul>',
                 'instructor' => 'David Kim',
                 'is_published' => true,
             ],
         ];
 
-        foreach ($courses as $course) {
-            Course::create($course);
+        foreach ($courses as $courseData) {
+            Course::updateOrCreate(
+                ['slug' => $courseData['slug']],
+                $courseData
+            );
         }
     }
 }

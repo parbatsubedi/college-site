@@ -28,13 +28,13 @@
             <div>
                 <div class="fade-in">
                     <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 20px; color: var(--text-dark);">Course Overview</h2>
-                    <p style="font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 30px;">
-                        {{ $course->description }}
-                    </p>
+                    <div style="font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 30px;">
+                        {!! $course->description !!}
+                    </div>
                     @if($course->curriculum)
-                    <p style="font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 30px;">
-                        {{ $course->curriculum }}
-                    </p>
+                    <div style="font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 30px;">
+                        {!! $course->curriculum !!}
+                    </div>
                     @endif
                 </div>
 
@@ -86,18 +86,7 @@
                 <div class="fade-in" style="margin-top: 40px;">
                     <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 20px; color: var(--text-dark);">Entry Requirements</h3>
                     <div style="background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <ul style="list-style: none; padding: 0;">
-                            @php
-                            $requirements = explode("\n", $course->entry_requirements);
-                            @endphp
-                            @foreach($requirements as $req)
-                            @if(trim($req))
-                            <li style="padding: 12px 0; color: var(--text-muted); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 10px;">
-                                <span style="color: var(--primary);">✓</span> {{ trim($req, '• ') }}
-                            </li>
-                            @endif
-                            @endforeach
-                        </ul>
+                        {!! $course->entry_requirements !!}
                     </div>
                 </div>
                 @endif
@@ -106,18 +95,7 @@
                 <div class="fade-in" style="margin-top: 40px;">
                     <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 20px; color: var(--text-dark);">How to Apply</h3>
                     <div style="background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <ul style="list-style: none; padding: 0;">
-                            @php
-                            $steps = explode("\n", $course->how_to_apply);
-                            @endphp
-                            @foreach($steps as $step)
-                            @if(trim($step))
-                            <li style="padding: 12px 0; color: var(--text-muted); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 10px;">
-                                <span style="color: var(--primary);">→</span> {{ trim($step, '• ') }}
-                            </li>
-                            @endif
-                            @endforeach
-                        </ul>
+                        {!! $course->how_to_apply !!}
                     </div>
                 </div>
                 @endif
@@ -126,18 +104,7 @@
                 <div class="fade-in" style="margin-top: 40px;">
                     <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 20px; color: var(--text-dark);">International Students</h3>
                     <div style="background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <ul style="list-style: none; padding: 0;">
-                            @php
-                            $intlReqs = explode("\n", $course->international_requirements);
-                            @endphp
-                            @foreach($intlReqs as $req)
-                            @if(trim($req))
-                            <li style="padding: 12px 0; color: var(--text-muted); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 10px;">
-                                <span style="color: var(--primary);">✓</span> {{ trim($req, '• ') }}
-                            </li>
-                            @endif
-                            @endforeach
-                        </ul>
+                        {!! $course->international_requirements !!}
                     </div>
                 </div>
                 @endif
@@ -145,7 +112,9 @@
                 @if($course->fees_payment_info)
                 <div class="fade-in" style="margin-top: 40px;">
                     <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 20px; color: var(--text-dark);">Fees & Payment Plans</h3>
-                    <div style="background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color); white-space: pre-line;">{{ $course->fees_payment_info }}</div>
+                    <div style="background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        {!! $course->fees_payment_info !!}
+                    </div>
                 </div>
                 @endif
 
@@ -153,18 +122,7 @@
                 <div class="fade-in" style="margin-top: 40px;">
                     <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 20px; color: var(--text-dark);">Policies & Forms</h3>
                     <div style="background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <ul style="list-style: none; padding: 0;">
-                            @php
-                            $policies = explode("\n", $course->policies_forms);
-                            @endphp
-                            @foreach($policies as $policy)
-                            @if(trim($policy))
-                            <li style="padding: 10px 0; color: var(--text-muted); border-bottom: 1px solid var(--border-color);">
-                                <span style="color: var(--primary);">📄</span> {{ trim($policy, '• ') }}
-                            </li>
-                            @endif
-                            @endforeach
-                        </ul>
+                        {!! $course->policies_forms !!}
                     </div>
                 </div>
                 @endif

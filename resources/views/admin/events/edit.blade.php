@@ -24,7 +24,7 @@
             
             <div class="mb-3">
                 <label class="form-label">Description *</label>
-                <textarea name="description" class="form-control" rows="4" required>{{ old('description', $event->description) }}</textarea>
+                <textarea name="description" class="form-control ckeditor" rows="4" required>{{ old('description', $event->description) }}</textarea>
                 <small class="text-muted">What to expect at the event - shows in event card</small>
             </div>
             
@@ -61,9 +61,7 @@
                     <small class="text-muted">Where event is held (e.g., "Sydney Campus" or "Online")</small>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label class="form-label">Image URL</label>
-                    <input type="text" name="image" class="form-control" value="{{ old('image', $event->image) }}" placeholder="event-image.jpg">
-                    <small class="text-muted">Image filename (stored in public/images/events/)</small>
+                    <x-image-upload name="image" :currentImage="$event->image" label="Event Image" path="events" />
                 </div>
             </div>
             

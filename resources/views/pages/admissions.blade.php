@@ -74,16 +74,8 @@
                 <h2 class="section-title">Application Process</h2>
             </div>
             @if($selectedCourse->how_to_apply)
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 60px;">
-                @php $steps = explode("\n", $selectedCourse->how_to_apply); @endphp
-                @foreach($steps as $index => $step)
-                @if(trim($step))
-                <div style="background: var(--card-bg); padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); text-align: left; transition: all 0.3s ease;" class="stat-card">
-                    <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 20px; margin-bottom: 20px;">{{ $index + 1 }}</div>
-                    <p style="color: var(--text-muted); margin: 0; font-size: 15px; line-height: 1.6;">{{ trim($step, '• ') }}</p>
-                </div>
-                @endif
-                @endforeach
+            <div style="background: var(--card-bg); padding: 35px; border-radius: 20px; border: 1px solid var(--border-color); margin-bottom: 60px;">
+                <div class="rich-content">{!! $selectedCourse->how_to_apply !!}</div>
             </div>
             @else
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 60px;">
@@ -109,17 +101,7 @@
                             Domestic Students
                         </h3>
                         @if($selectedCourse->entry_requirements)
-                        <ul style="list-style: none; padding: 0;">
-                            @php $requirements = explode("\n", $selectedCourse->entry_requirements); @endphp
-                            @foreach($requirements as $req)
-                            @if(trim($req))
-                            <li style="padding: 15px 0; color: var(--text-muted); border-bottom: 1px solid var(--border-color); display: flex; align-items: flex-start; gap: 12px; font-size: 15px;">
-                                <span style="color: var(--primary); font-size: 18px; font-weight: 700;">✓</span>
-                                <span>{{ trim($req, '• ') }}</span>
-                            </li>
-                            @endif
-                            @endforeach
-                        </ul>
+                        <div class="rich-content">{!! $selectedCourse->entry_requirements !!}</div>
                         @else
                         <ul style="list-style: none; padding: 0;">
                             <li style="padding: 15px 0; color: var(--text-muted); border-bottom: 1px solid var(--border-color); display: flex; align-items: flex-start; gap: 12px; font-size: 15px;">
@@ -144,17 +126,7 @@
                             International Students
                         </h3>
                         @if($selectedCourse->international_requirements)
-                        <ul style="list-style: none; padding: 0;">
-                            @php $intlReqs = explode("\n", $selectedCourse->international_requirements); @endphp
-                            @foreach($intlReqs as $req)
-                            @if(trim($req))
-                            <li style="padding: 15px 0; color: var(--text-muted); border-bottom: 1px solid var(--border-color); display: flex; align-items: flex-start; gap: 12px; font-size: 15px;">
-                                <span style="color: var(--primary); font-size: 18px; font-weight: 700;">✓</span>
-                                <span>{{ trim($req, '• ') }}</span>
-                            </li>
-                            @endif
-                            @endforeach
-                        </ul>
+                        <div class="rich-content">{!! $selectedCourse->international_requirements !!}</div>
                         @else
                         <ul style="list-style: none; padding: 0;">
                             <li style="padding: 15px 0; color: var(--text-muted); border-bottom: 1px solid var(--border-color); display: flex; align-items: flex-start; gap: 12px; font-size: 15px;">
@@ -182,7 +154,7 @@
             </div>
             <div style="background: var(--card-bg); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); max-width: 800px; margin: 0 auto 60px; text-align: center;">
                 @if($selectedCourse->fees_payment_info)
-                <div style="text-align: left; white-space: pre-line; color: var(--text-muted); line-height: 1.8; font-size: 16px;">{{ $selectedCourse->fees_payment_info }}</div>
+                <div class="rich-content" style="text-align: left;">{!! $selectedCourse->fees_payment_info !!}</div>
                 @else
                 <div style="display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap;">
                     <div>
@@ -208,16 +180,8 @@
                     <span class="section-badge">Resources</span>
                     <h2 class="section-title">Policies & Forms</h2>
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; max-width: 1000px; margin: 0 auto;">
-                    @php $policies = explode("\n", $selectedCourse->policies_forms); @endphp
-                    @foreach($policies as $policy)
-                    @if(trim($policy))
-                    <div style="background: var(--card-bg); padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); text-align: center; transition: all 0.3s ease;" class="stat-card">
-                        <span style="font-size: 40px;">📄</span>
-                        <p style="color: var(--text-dark); font-weight: 600; margin: 15px 0 0; font-size: 15px;">{{ trim($policy, '• ') }}</p>
-                    </div>
-                    @endif
-                    @endforeach
+                <div style="background: var(--card-bg); padding: 35px; border-radius: 20px; border: 1px solid var(--border-color); max-width: 800px; margin: 0 auto;">
+                    <div class="rich-content">{!! $selectedCourse->policies_forms !!}</div>
                 </div>
             </div>
             @endif
@@ -239,7 +203,6 @@
         @else
         <!-- Default content when no course selected -->
         <div class="fade-in">
-            <!-- How to Apply Section -->
             <div>
                 <div class="section-header">
                     <span class="section-badge">How to Apply</span>
@@ -278,7 +241,6 @@
                 </div>
             </div>
 
-            <!-- CTA Section -->
             <div class="cta-section" style="margin-top: 80px;">
                 <div class="container">
                     <div class="cta-content">

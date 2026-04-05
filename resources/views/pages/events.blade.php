@@ -32,7 +32,7 @@
             <div class="event-card fade-in">
                 <div class="event-image">
                     @if($event->image)
-                    <div style="width: 100%; height: 100%; background-image: url('{{ asset('images/events/' . $event->image) }}'); background-size: cover; background-position: center;">
+                    <div style="width: 100%; height: 100%; background-image: url('{{ asset('storage/events/' . $event->image) }}'); background-size: cover; background-position: center;">
                     @else
                     <div style="width: 100%; height: 100%; background: linear-gradient(135deg, {{ $event->category == 'workshop' ? '#172566 0%, #1e3170 100%' : ($event->category == 'graduation' ? '#CF5E1C 0%, #FD6406 100%' : ($event->category == 'networking' ? '#077E86 0%, #172566 100%' : '#077E86 0%, #2A7970 100%')) }}; display: flex; align-items: center; justify-content: center;">
                         @switch($event->category)

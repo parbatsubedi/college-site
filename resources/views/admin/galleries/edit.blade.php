@@ -18,8 +18,7 @@
                 <input type="text" name="title" class="form-control" value="{{ old('title', $gallery->title) }}" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">Image URL</label>
-                <input type="text" name="image" class="form-control" value="{{ old('image', $gallery->image) }}" required>
+                <x-image-upload name="image" :currentImage="$gallery->image" label="Gallery Image" path="galleries" />
             </div>
             <div class="mb-3">
                 <label class="form-label">Category</label>
@@ -27,7 +26,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Description</label>
-                <textarea name="description" class="form-control" rows="3">{{ old('description', $gallery->description) }}</textarea>
+                <textarea name="description" class="form-control ckeditor" rows="3">{{ old('description', $gallery->description) }}</textarea>
             </div>
             <div class="mb-3">
                 <div class="form-check">

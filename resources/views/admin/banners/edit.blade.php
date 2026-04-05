@@ -37,20 +37,7 @@
                 </div>
                 
                 <div class="col-md-6 mb-3">
-                    <label class="form-label">Current Image</label>
-                    @if($banner->image_url || $banner->image_path)
-                        <div class="mb-2">
-                            <img src="{{ $banner->getBackgroundImage() }}" alt="Current Image" style="max-height: 150px; border-radius: 4px;">
-                        </div>
-                    @else
-                        <p class="text-muted">No image uploaded</p>
-                    @endif
-                </div>
-                
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Upload New Image</label>
-                    <input type="file" name="image_file" class="form-control" accept="image/*">
-                    <small class="text-muted">Supported: jpeg, png, jpg, gif, svg (Max: 2MB)</small>
+                    <x-image-upload name="image_file" :currentImage="$banner->image_path" label="Banner Image" path="banners" />
                     @error('image_file')
                         <div class="text-danger small">{{ $message }}</div>
                     @enderror

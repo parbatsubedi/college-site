@@ -3,7 +3,7 @@
 @section('title', 'Create Page')
 
 @section('content')
-<?php $page = new \App\Models\Page(); ?>
+<?php $page = new \App\Models\Page; ?>
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Create Page</h2>
     <a href="{{ route('admin.pages.index') }}" class="btn btn-secondary">Back</a>
@@ -26,7 +26,7 @@
             
             <div class="mb-3">
                 <label class="form-label">Content</label>
-                <textarea name="content" class="form-control" rows="10" required>{{ old('content') }}</textarea>
+                <textarea name="content" class="form-control ckeditor" rows="10" required>{{ old('content') }}</textarea>
             </div>
             
             <div class="row">

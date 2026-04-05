@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -28,7 +29,7 @@ class CourseController extends Controller
             'category' => 'required|string|max:255',
             'duration' => 'required|integer|min:1',
             'fee' => 'required|numeric|min:0',
-            'image' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'curriculum' => 'nullable',
             'instructor' => 'nullable|string|max:255',
             'study_mode' => 'nullable|string|max:255',
@@ -46,7 +47,15 @@ class CourseController extends Controller
             'is_published' => 'boolean',
         ]);
 
-        $data = $request->all();
+        $data = $request->except('image');
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time().'_'.$image->getClientOriginalName();
+            $image->storeAs('courses', $imageName, 'public');
+            $data['image'] = $imageName;
+        }
 
         // Convert text fields to JSON arrays
         if ($request->has('core_units_text') && $request->core_units_text) {
@@ -86,7 +95,7 @@ class CourseController extends Controller
             'category' => 'required|string|max:255',
             'duration' => 'required|integer|min:1',
             'fee' => 'required|numeric|min:0',
-            'image' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'curriculum' => 'nullable',
             'instructor' => 'nullable|string|max:255',
             'study_mode' => 'nullable|string|max:255',
@@ -104,7 +113,19 @@ class CourseController extends Controller
             'is_published' => 'boolean',
         ]);
 
-        $data = $request->all();
+        $data = $request->except('image');
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($course->image) {
+                Storage::disk('public')->delete('courses/'.$course->image);
+            }
+            $image = $request->file('image');
+            $imageName = time().'_'.$image->getClientOriginalName();
+            $image->storeAs('courses', $imageName, 'public');
+            $data['image'] = $imageName;
+        }
 
         // Convert text fields to JSON arrays
         if ($request->has('core_units_text') && $request->core_units_text) {

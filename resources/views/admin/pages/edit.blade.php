@@ -26,7 +26,7 @@
             
             <div class="mb-3">
                 <label class="form-label">Content</label>
-                <textarea name="content" class="form-control" rows="10" required>{{ old('content', $page->content) }}</textarea>
+                <textarea name="content" class="form-control ckeditor" rows="10" required>{{ old('content', $page->content) }}</textarea>
             </div>
             
             <div class="row">
